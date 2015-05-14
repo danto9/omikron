@@ -1,3 +1,4 @@
+/// <reference path="typings/node/node.d.ts"/>
 var fs = require('fs')
 var https = require('https')
 
@@ -13,40 +14,40 @@ var app = express();
 var server = https.createServer({
   cert: fs.readFileSync(__dirname+'/my.crt'),
   key: fs.readFileSync(__dirname+'/my.key')
-}, app)
+}, app);
 
 /* Setup Express */
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(passport.initialize())
+app.use(passport.initialize());
 /* // Setup Express */
 
 
 /* Setup Passport Session Authentication */
-passport.use(new passportHttp.BasicStrategy(authentication.authenticate))
+passport.use(new passportHttp.BasicStrategy(authentication.authenticate));
 
-passport.serializeUser(authentication.serializeUser)
+passport.serializeUser(authentication.serializeUser);
 
-passport.deserializeUser(authentication.deserializeUser)
+passport.deserializeUser(authentication.deserializeUser);
 /* // Setup Passport Session Authentication */
 
-app.use('/', passport.authenticate('basic'))
+app.use('/', passport.authenticate('basic'));
 app.use('/', function(req, res, next){
   if(req.isAuthenticated()){
-    next()
+    next();
   }else{
-    res.send(403)
+    res.send(403);
   }
-})
+});
 
 app.get('/', function(req, res){
-  res.send('OK')
-})
+  res.send('OK');
+});
 
-app.use('/userinfo', routes.userinfo)
+app.use('/userinfo', routes.userinfo);
 
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 3000;
 
 server.listen(port, function(){
-  console.log("Omikron is listening on https://%s:%s !", "127.0.0.1", port)
-})
+  console.log("Omikron is listening on https://%s:%s !", "127.0.0.1", port);
+});
