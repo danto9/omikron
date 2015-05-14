@@ -3,10 +3,11 @@ var https = require('https')
 
 var express = require('express')
 var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
-var expressSession = require('express-session')
 var passport = require('passport')
 var passportHttp = require('passport-http')
+
+var routes = require('./routes')
+var authentication = require('./authentication')
 
 var app = express();
 var server = https.createServer({
@@ -22,39 +23,30 @@ app.use(passport.initialize())
 
 
 /* Setup Passport Session Authentication */
-passport.use(new passportHttp.BasicStrategy(function(username, password, done){
-  if(username === password){
-    done(null, { id: username, name: username})
-  }else{
-    done(null, null)
-  }
-}))
+passport.use(new passportHttp.BasicStrategy(authentication.authenticate))
 
-passport.serializeUser(function(user, done){
-  done(null, user.id)
-})
+passport.serializeUser(authentication.serializeUser)
 
-passport.deserializeUser(function(id, done){
-  done(null, {id: id, name: id})
-})
+passport.deserializeUser(authentication.deserializeUser)
+/* // Setup Passport Session Authentication */
 
-function ensureAuthentication(req, res, next){
+app.use('/', passport.authenticate('basic'))
+app.use('/', function(req, res, next){
   if(req.isAuthenticated()){
     next()
   }else{
     res.send(403)
   }
-}
-/* // Setup Passport Session Authentication */
-
-app.use('/', passport.authenticate('basic'))
+})
 
 app.get('/', function(req, res){
   res.send('OK')
 })
 
+app.use('/userinfo', routes.userinfo)
+
 var port = process.env.PORT || 3000
 
 server.listen(port, function(){
-  console.log("App is listening on %s:%s !", "https://127.0.0.1", port)
+  console.log("Omikron is listening on https://%s:%s !", "127.0.0.1", port)
 })
