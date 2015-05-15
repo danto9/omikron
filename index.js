@@ -17,7 +17,8 @@ var server = https.createServer({
 }, app);
 
 /* Setup Express */
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
 /* // Setup Express */
@@ -45,6 +46,8 @@ app.get('/', function(req, res){
 });
 
 app.use('/userinfo', routes.userinfo);
+app.use('/filetree', routes.filetree);
+app.use('/file', routes.file);
 
 var port = process.env.PORT || 3000;
 

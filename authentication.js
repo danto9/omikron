@@ -19,12 +19,15 @@ exports.deserializeUser = function(id, done){
 //if authentication is valid then return a user object to done function
 //if not return null
 exports.authenticate = function(username, password, done){
+  var isDone = false;
   users.forEach(function(value, index, array){
     if(value.name === username){
       if(value.password === crypto.pbkdf2Sync(password, 'salt', 4096, 512, 'sha256').toString('hex')){
-        done(null, value)
+        done(null, value);
+        isDone = true;
       }
     }
   });
-  done(null, null);
+  if(!isDone)
+    done(null, null);
 };
