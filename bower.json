@@ -1,0 +1,28 @@
+{
+  "name": "omikron",
+  "version": "0.0.0",
+  "homepage": "https://github.com/danto9/omikron",
+  "authors": [
+    "Daniel Jensen <jensen.daniel97@gmail.com>"
+  ],
+  "description": "A simple cloud programming platform",
+  "main": "index.html",
+  "keywords": [
+    "omikron",
+    "cloud",
+    "programing",
+    "platform"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
