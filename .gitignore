@@ -3,4 +3,4 @@ my.crt
 my.key
 .settings/
 typings/
-public/lib/
+public/lib

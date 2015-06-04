@@ -21,8 +21,6 @@
     "btoa": "^1.1.2",
     "express": "^4.12.4",
     "morgan": "^1.5.3",
-    "passport": "^0.2.2",
-    "passport-http": "^0.2.2",
     "path": "^0.11.14"
   }
 }
